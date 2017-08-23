@@ -43,7 +43,6 @@ namespace Bcfier.Revit.Entry
           var cameraViewPoint = RevitUtils.GetRevitXYZ(v.OrthogonalCamera.CameraViewPoint);
           var orient3D = RevitUtils.ConvertBasePoint(doc, cameraViewPoint, cameraDirection, cameraUpVector, true);
 
-
           View3D orthoView = null;
           //if active view is 3d ortho use it
           if (doc.ActiveView.ViewType == ViewType.ThreeD)
@@ -175,51 +174,73 @@ namespace Bcfier.Revit.Entry
         else
           return;
 
-        //select/hide elements
-        if (v.Components != null && v.Components.Any())
+        if (v.Components == null)
+          return;
+
+
+        var elementsToSelect = new List<ElementId>();
+        var elementsToHide = new List<ElementId>();
+        var elementsToShow = new List<ElementId>();
+
+        var visibleElems = new FilteredElementCollector(doc, doc.ActiveView.Id)
+        .WhereElementIsNotElementType()
+        .WhereElementIsViewIndependent()
+        .ToElementIds()
+        .Where(e => doc.GetElement(e).CanBeHidden(doc.ActiveView)); //might affect performance, but it's necessary
+
+
+        bool canSetVisibility = (v.Components.Visibility != null &&
+          v.Components.Visibility.DefaultVisibilitySpecified &&
+          v.Components.Visibility.Exceptions.Any())
+          ;
+        bool canSetSelection = (v.Components.Selection != null && v.Components.Selection.Any());
+
+       
+
+        //loop elements
+        foreach (var e in visibleElems)
         {
-          var elementsToSelect = new List<ElementId>();
-          var elementsToHide = new List<ElementId>();
-          var elementsToShow = new List<ElementId>();
+          var guid = IfcGuid.ToIfcGuid(ExportUtils.GetExportId(doc, e));
 
-          //Assuming that 
-          var visibleElems = new FilteredElementCollector(doc, doc.ActiveView.Id)
-         .WhereElementIsNotElementType()
-         .WhereElementIsViewIndependent()
-         .ToElementIds()
-         .Where(e => doc.GetElement(e).CanBeHidden(doc.ActiveView)); //might affect performance, but it's necessary
-
-          foreach (var e in visibleElems)
+          if (canSetVisibility)
           {
-            //elements to select
-            var guid = IfcGuid.ToIfcGuid(ExportUtils.GetExportId(doc, e));
-            if (v.Components.Any(x => x.IfcGuid == guid && x.Selected))
-              elementsToSelect.Add(e);
-
-            //elements to hide
-            if (v.Components.Any(x => x.IfcGuid == guid && !x.Visible))
-              elementsToHide.Add(e);
-
-            //elements to show //could be optional
-            if (v.Components.Any(x => x.IfcGuid == guid && x.Visible))
-              elementsToShow.Add(e);
-          }
-
-          using (var trans = new Transaction(uidoc.Document))
-          {
-            if (trans.Start("Show/Hide and select elements") == TransactionStatus.Started)
+            if (v.Components.Visibility.DefaultVisibility)
             {
-              if (elementsToHide.Any())
-                doc.ActiveView.HideElementsTemporary(elementsToHide);
-                //there are no items to hide, therefore hide everything and just show the visible ones
-              else if (elementsToShow.Any())
-                doc.ActiveView.IsolateElementsTemporary(elementsToShow);
-
-              if (elementsToSelect.Any())
-                uidoc.Selection.SetElementIds(elementsToSelect);
+              if (v.Components.Visibility.Exceptions.Any(x => x.IfcGuid == guid))
+                elementsToHide.Add(e);
             }
-            trans.Commit();
+            else
+            {
+              if (v.Components.Visibility.Exceptions.Any(x => x.IfcGuid == guid))
+                elementsToShow.Add(e);
+            }
           }
+
+          if (canSetSelection)
+          {
+            if (v.Components.Selection.Any(x => x.IfcGuid == guid))
+              elementsToSelect.Add(e);
+          }
+        }
+
+ 
+
+
+
+        using (var trans = new Transaction(uidoc.Document))
+        {
+          if (trans.Start("Apply BCF visibility and selection") == TransactionStatus.Started)
+          {
+            if (elementsToHide.Any())
+              doc.ActiveView.HideElementsTemporary(elementsToHide);
+            //there are no items to hide, therefore hide everything and just show the visible ones
+            else if (elementsToShow.Any())
+              doc.ActiveView.IsolateElementsTemporary(elementsToShow);
+
+            if (elementsToSelect.Any())
+              uidoc.Selection.SetElementIds(elementsToSelect);
+          }
+          trans.Commit();
         }
 
 

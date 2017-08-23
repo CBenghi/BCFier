@@ -5,17 +5,17 @@ using Bcfier.Bcf.Bcf2;
 
 namespace Bcfier.Windows
 {
-    /// <summary>
-    /// Interaction logic for Components.xaml
-    /// </summary>
-    public partial class ComponentsList : Window
+  /// <summary>
+  /// Interaction logic for Components.xaml
+  /// </summary>
+  public partial class ComponentsList : Window
+  {
+    //disabled for now
+    public ComponentsList(Components components)
     {
-        public ComponentsList(IEnumerable<Component> components)
-        {
-            InitializeComponent();
+      InitializeComponent();
+      //componentsList.ItemsSource = components.Selection;
 
-            componentsList.ItemsSource = components;
-            
-        }
     }
+  }
 }

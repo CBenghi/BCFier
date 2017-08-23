@@ -6,7 +6,7 @@ This project does not provide APIs for other applications to consume, so it's no
 <package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
   <metadata>
     <id>Bcfier.XbimXplorer</id>
-    <version>4.0.1-V0003</version>
+    <version>4.0.1-V0004</version>
     <title>Bcfier.XbimXplorer</title>
     <authors>Claudio Benghi, Matteo Cominetti</authors>
     <owners>Claudio Benghi, Matteo Cominetti</owners>
@@ -21,12 +21,13 @@ This project does not provide APIs for other applications to consume, so it's no
     <tags>BCF, Building Collaboration Format, BuildingSmart, XplorerPlugin</tags>
     <!-- dependencies need to be worked out, at this stage they will be ignored during install in Xbim-->
     <dependencies>
-      <dependency id="Xbim.WindowsUI" version="4.0.12-V0041" />
+      <dependency id="Xbim.WindowsUI" version="4.0.12-V0043" />
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\Release\Bcfier.XbimXplorer.exe"     target="lib\net45\" />
-    <file src="bin\Release\RestSharp.dll"              target="lib\net45\" />
-    <file src="bin\Release\Bcfier.dll"                 target="lib\net45\" />
+    <file src="bin\Release\Bcfier.XbimXplorer.exe"          target="lib\net45\" />
+    <file src="bin\Release\RestSharp.dll"                   target="lib\net45\" />
+    <file src="bin\Release\GongSolutions.WPF.DragDrop.dll"  target="lib\net45\" />
+    <file src="bin\Release\Bcfier.dll"                      target="lib\net45\" />
   </files>
 </package>
