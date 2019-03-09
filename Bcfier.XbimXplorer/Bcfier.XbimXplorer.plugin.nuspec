@@ -6,7 +6,7 @@ This project does not provide APIs for other applications to consume, so it's no
 <package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
   <metadata>
     <id>Bcfier.XbimXplorer</id>
-    <version>4.0.1-V0005</version>
+    <version>4.0.1-V0006</version>
     <title>Bcfier.XbimXplorer</title>
     <authors>Claudio Benghi, Matteo Cominetti</authors>
     <owners>Claudio Benghi, Matteo Cominetti</owners>
@@ -21,7 +21,7 @@ This project does not provide APIs for other applications to consume, so it's no
     <tags>BCF, Building Collaboration Format, BuildingSmart, XplorerPlugin</tags>
     <!-- dependencies need to be worked out, at this stage they will be ignored during install in Xbim-->
     <dependencies>
-      <dependency id="Xbim.WindowsUI" version="4.0.12-V0069" />
+      <dependency id="Xbim.WindowsUI" version="4.0.13-V004" />
     </dependencies>
   </metadata>
   <files>
