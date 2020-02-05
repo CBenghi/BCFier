@@ -10,7 +10,7 @@ This project does not provide APIs for other applications to consume, so it's no
     <title>Bcfier.XbimXplorer</title>
     <authors>Claudio Benghi, Matteo Cominetti</authors>
     <owners>Claudio Benghi, Matteo Cominetti</owners>
-    <licenseUrl>https://raw.githubusercontent.com/CBenghi/BCFier/blob/master/LICENSE</licenseUrl>
+    <license type="expression">GPL-3.0-only</license>
     <projectUrl>http://bcfier.com/</projectUrl>
     <iconUrl>https://raw.githubusercontent.com/teocomi/BCFier/master/Bcfier/Assets/BCFierIcon64x64.png</iconUrl>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
