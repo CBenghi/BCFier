@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Bcfier.Bcf.Bcf2;
-using log4net;
+using Microsoft.Extensions.Logging;
 using Xbim.Presentation;
 
 namespace Bcfier.XbimXplorer
@@ -14,7 +14,7 @@ namespace Bcfier.XbimXplorer
     /// </summary>
     public partial class AddViewXbim 
     {
-        private static readonly ILog Log = LogManager.GetLogger(nameof(AddViewXbim));
+        // private static readonly log = LoggerFactory.CreateLogger(nameof(XbimXplorerPluginWindowExtensions));
         private readonly DrawingControl3D _control;
 
         public AddViewXbim(Markup issue, string bcfTempFolder, DrawingControl3D control)
@@ -71,7 +71,7 @@ namespace Bcfier.XbimXplorer
             }
             catch (Exception ex)
             {
-                Log.Error("Counld not create screenshot from model.", ex);               
+                _control?.Model?.Logger?.LogError(ex, ex.Message);
                 return false;
             }
             return true;
