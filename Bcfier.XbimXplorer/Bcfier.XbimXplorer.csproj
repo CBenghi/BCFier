@@ -251,9 +251,7 @@
       <Name>Bcfier</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Assets\icon.ico" />
   </ItemGroup>

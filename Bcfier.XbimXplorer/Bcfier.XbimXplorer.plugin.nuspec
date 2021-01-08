@@ -12,7 +12,7 @@ This project does not provide APIs for other applications to consume, so it's no
     <owners>Claudio Benghi, Matteo Cominetti</owners>
     <license type="expression">GPL-3.0-only</license>
     <projectUrl>http://bcfier.com/</projectUrl>
-    <iconUrl>https://raw.githubusercontent.com/teocomi/BCFier/master/Bcfier/Assets/BCFierIcon64x64.png</iconUrl>
+    <icon>icon.png</icon>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <description>Integration of Matteo Cominetti's BCFier editor of BuildingSmart's BCF.</description>
     <summary>.</summary>
@@ -21,10 +21,13 @@ This project does not provide APIs for other applications to consume, so it's no
     <tags>BCF, Building Collaboration Format, BuildingSmart, XplorerPlugin</tags>
     <!-- dependencies are used to determine the compatibiliy with the xplorer version... chose carefully -->
     <dependencies>
-      <dependency id="Xbim.WindowsUI" version="[5.1, 5.2)" />
+      <group targetFramework="net45">
+        <dependency id="Xbim.WindowsUI" version="[5.1, 5.2)" />
+      </group>
     </dependencies>
   </metadata>
   <files>
+    <file src="..\Assets\bcfier.png"          target="icon.png" />
     <file src="bin\Release\Bcfier.XbimXplorer.exe"          target="lib\net45\" />
     <file src="bin\Release\RestSharp.dll"                   target="lib\net45\" />
     <file src="bin\Release\GongSolutions.WPF.DragDrop.dll"  target="lib\net45\" />
